@@ -1,0 +1,295 @@
+
+<!doctype html>
+<html>
+  <head>
+    <title>iTraffic TrafficLight</title>
+    <style>
+        @font-face{
+            font-family:'digital-clock-font';
+            src: url('/digital-7.ttf');
+        }
+      html{
+        font-family: digital-clock-font;
+        background: linear-gradient(#08f, #fff);
+        padding: 40px;
+        width: 170px;
+        height: 100%;
+        margin: 0 auto;
+      }
+      
+      .trafficlight{
+        background: #222;
+        background-image: linear-gradient(transparent 2%, #111 2%, transparent 3%, #111 30%);
+        width: 170px;
+        height: 400px;
+        border-radius: 20px;
+        position: relative;
+        border: solid 5px #333;
+      }
+      
+      .trafficlight:before{
+        background: #222;
+        background-image: radial-gradient(#444, #000);
+        content: "";
+        width: 170px;
+        height: 150px;
+        margin: 0 auto;
+        position: absolute;
+        top: -20px;
+        margin-left: 0px;
+        border-radius: 50%;
+        z-index: -1;
+      }
+      
+      .trafficlight:after{
+        background: #222;
+        background-image: linear-gradient(-90deg, #222 0%, #444 30%, #000);
+        content: "";
+        width: 50px;
+        height: 500px;
+        margin-left: 60px;
+        position: absolute;
+        top: 150px;
+        z-index: -1;
+      }
+      
+      .protector{
+        background: transparent;
+        width: 180px;
+        height: 0;
+        position: absolute;
+        top: 20px;
+        left: -35px;
+        border-right: solid 30px transparent;
+        border-left: solid 30px transparent;
+        border-top: solid 90px #111;
+        border-radius: 10px;
+        z-index: -1;
+      }
+      
+      .protector:nth-child(2){
+        top: 140px;
+      }
+      
+      .protector:nth-child(3){
+        top: 260px;
+      }
+      
+      .red{
+        background: red;
+        background-image: radial-gradient(brown, transparent);
+        background-size: 5px 5px; 
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        position: absolute;
+        top: 20px;
+        left: 35px;
+        /*animation: 13s red infinite;*/
+        border: dotted 2px red;
+        box-shadow: 
+          0 0 20px #111 inset,
+          0 0 10px red;
+      }
+      
+      .yellow{
+        background: yellow;
+        background-image: radial-gradient(orange, transparent);
+        background-size: 5px 5px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: dotted 2px yellow;
+        position: absolute;
+        top: 145px;
+        left: 35px;
+        /*animation: 13s yellow infinite;*/
+        box-shadow: 
+          0 0 20px #111 inset,
+          0 0 10px yellow;
+      }
+      
+      .green{
+        background: green;
+        background-image: radial-gradient(lime, transparent);
+        background-size: 5px 5px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: dotted 2px lime;
+        position: absolute;
+        top: 270px;
+        left: 35px;
+        box-shadow: 
+          0 0 20px #111 inset,
+          0 0 10px lime;
+        /*animation: 13s green infinite;*/
+      }
+      
+      @keyframes red{
+        0%{opacity: 1}
+        20%{opacity: 1}
+        40%{opacity: 1}
+        60%{opacity: .1}
+        80%{opacity: .1}
+        100%{opacity: .1}
+      }
+      
+      @keyframes yellow{
+        0%{opacity: .1}
+        20%{opacity: .1}
+        40%{opacity: 1}
+        50%{opacity: .1}
+        60%{opacity: .1}
+        80%{opacity: .1}
+        100%{opacity: .1}
+      }
+      
+      @keyframes green{
+        0%{opacity: .1}
+        20%{opacity: .1}
+        40%{opacity: .1}
+        60%{opacity: 1}
+        80%{opacity: 1}
+        83%{opacity: .1}
+        86%{opacity: 1}
+        89%{opacity: .1}
+        93%{opacity: 1}
+        96%{opacity: .1}
+        100%{opacity: 1}
+      }
+      .console-log{
+        position: absolute;
+        left: 0;
+        background-color: white;
+        width: 300px;
+        height: 300px;
+      }
+      .time-log{
+          border-radius: 10px;
+        padding: 15px;
+        font-size: 1.8em;
+        position: absolute;
+        right: 0;
+        background-color: white;
+        width: 300px;
+        height: 300px;
+      }
+        .off{
+            -webkit-transition: opacity 0.5s ease-out;
+        -moz-transition: opacity 0.5s ease-out;
+            -o-transition: opacity 0.5s ease-out;
+                                        opacity: 0.3;
+        }
+        .on{
+            -webkit-transition: opacity 0.5s ease-in;
+        -moz-transition: opacity 0.5s ease-in;
+            -o-transition: opacity 0.5s ease-in;
+                                        opacity: 1;
+        }
+        .countdown{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: white;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 120px;
+        }
+        #countdown{
+            margin-top: 25px;
+        }
+    </style>
+  </head>
+  <body>
+        <div class="trafficlight">
+                <div class="protector"></div>
+                <div class="protector"></div>
+                <div class="protector"></div>
+                <div class="red off"></div>
+                <div class="yellow off"></div>
+                <div class="green off"></div>
+              </div>
+            <div class="console-log">Console:
+                <ul></ul>
+            </div>
+            <div class="time-log"><div style="font-size:1.9em;text-align:center;margin-bottom:30px;">Cycle Timing</div>
+                <div>Red: <span id="red_time"></span></div>
+                <div>Green: <span id="green_time"></span></div>
+            </div>
+            <div class="countdown">
+                <div id="countdown"></div>
+            </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+    function clearLights(){
+        $('.trafficlight').find('div').removeClass('on');
+        $('.trafficlight').find('div').addClass('off');
+    }
+    var temps = {'red': 10, 'green': 10, 'yellow': 3};
+    var new_temps = {'red': 10, 'green': 10, 'yellow': 3};
+    var lights = ['green', 'yellow', 'red'];
+    var SPEED = 500;
+    var timeOut;
+    var timeInt;
+    var needsreset = 0;
+    function finishedCycle(){
+        console.log('terminou');
+        if(needsreset){
+            temps = new_temps;
+        }
+            turnOn(0);
+    }
+    function turnOn(pos){
+        clearLights();
+        var light = lights[pos];
+        $('.'+light).removeClass('off');
+        $('.'+light).addClass('on');
+        var timeleft = temps[light];
+        var totalTime = temps[light];
+        timeInt = setInterval(function(){
+            var t = (timeleft);
+            //console.log(t);
+            $('#countdown').html(t);
+            timeleft--;
+            if(timeleft <= 0){
+                clearInterval(timeInt);
+            }
+        },SPEED);
+        timeOut = setTimeout(function(){
+            if(pos+1>lights.length-1)
+                finishedCycle();
+            else
+                turnOn(pos+1);
+        }, (temps[light]+1)*SPEED);
+    }
+    $(function () {
+        var lastmessage;
+        var socket = io();
+        $('form').submit(function(){
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+        });
+        $('#red_time').html(temps.red);
+        $('#green_time').html(temps.green);
+        socket.on('newTiming', function(msg){
+            var time = msg.split('-')[1];
+            new_temps.red = parseInt(time.slice(0, 2));
+            new_temps.green = parseInt(time.slice(2, 4));
+            $('#red_time').html(new_temps.red);
+            $('#green_time').html(new_temps.green);
+            if(lastmessage != msg){
+                $('.console-log').append('<li>'+msg+'</li>');
+                needsreset = 1;
+            }
+            lastmessage = msg;
+        });
+        turnOn(0);
+    });
+    </script>
+  </body>
+</html>
